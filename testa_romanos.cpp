@@ -68,3 +68,11 @@ TEST_CASE( "Numeros romanos - algarismos inv�lidos", "[romanos]" ) {
     
 }
  
+TEST_CASE("Numeros romanos - regra de uso de algarismos", "[romanos]" ){
+    REQUIRE( romanos_para_decimal("IIII") == -1 );
+    
+    REQUIRE( romanos_para_decimal("XXXX") == -1 );
+    
+    REQUIRE( romanos_para_decimal("VIIII") == -1 );
+    
+}
