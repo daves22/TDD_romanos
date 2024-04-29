@@ -75,4 +75,62 @@ TEST_CASE("Numeros romanos - regra de uso de algarismos", "[romanos]" ){
     
     REQUIRE( romanos_para_decimal("VIIII") == -1 );
     
+    REQUIRE( romanos_para_decimal("VV") == -1);
+
+}
+
+TEST_CASE("Numeros romanos - regra de uso de algarismos antecessores", "[romanos]"){
+    REQUIRE( romanos_para_decimal("IV") == 4);
+
+    REQUIRE( romanos_para_decimal("IX") == 9);
+
+    REQUIRE( romanos_para_decimal("IL") == -1);
+
+    REQUIRE( romanos_para_decimal("IC") == -1);
+
+    REQUIRE( romanos_para_decimal("ID") == -1);
+
+    REQUIRE( romanos_para_decimal("IM") == -1);
+
+    REQUIRE( romanos_para_decimal("ID") == -1);
+
+    REQUIRE( romanos_para_decimal("VX") == -1);
+
+    REQUIRE( romanos_para_decimal("VL") == -1);
+
+    REQUIRE( romanos_para_decimal("VC") == -1);
+    
+    REQUIRE( romanos_para_decimal("VD") == -1);
+
+    REQUIRE( romanos_para_decimal("VM") == -1);
+
+    REQUIRE( romanos_para_decimal("XL") == 40);
+
+    REQUIRE( romanos_para_decimal("XC") == 90);
+
+    REQUIRE( romanos_para_decimal("XD") == -1);
+
+    REQUIRE( romanos_para_decimal("XM") == -1);
+
+    REQUIRE( romanos_para_decimal("LC") == -1);
+
+    REQUIRE( romanos_para_decimal("XL") == 40);
+
+    REQUIRE( romanos_para_decimal("XC") == 90);
+    
+    REQUIRE( romanos_para_decimal("LD") == -1);
+
+    REQUIRE( romanos_para_decimal("LM") == -1);
+    
+    REQUIRE( romanos_para_decimal("ML") == 1050);
+    
+    REQUIRE( romanos_para_decimal("IX") == 9);
+    
+    REQUIRE( romanos_para_decimal("CD") == 400);
+    
+    REQUIRE( romanos_para_decimal("MCMXCIX") == 1999);
+    
+    REQUIRE( romanos_para_decimal("MD") == 1500);
+
+    REQUIRE( romanos_para_decimal("DM") == -1);
 }
