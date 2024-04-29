@@ -1,0 +1,94 @@
+        -:    0:Source:romanos.cpp
+        -:    1:#include "romanos.hpp"
+        -:    2:
+       58:    3:int romanos_para_decimal(char const * num_romano)
+        -:    4:{
+       58:    5:  int decimalValue = 0;
+        -:    6:
+        -:    7:  // Verifica cada algarismo romano de maneira singular
+       58:    8:  char prev_symbol = num_romano[0];
+       58:    9:  int contador = 1;
+      117:   10:  for(int i = 0; num_romano[i] != '\0'; i++){  
+        -:   11:    // atribui o valor decimal ao caractere atual
+       99:   12:    switch (num_romano[i]) {
+       17:   13:      case 'I':
+       17:   14:        decimalValue += 1;
+       17:   15:        break;
+       10:   16:      case 'V':
+       10:   17:        if(prev_symbol == 'I'){
+        1:   18:          decimalValue += 3; //Subtrai 2 por conta do +1 do I
+        -:   19:        }else{
+        9:   20:          decimalValue += 5;
+        -:   21:        }
+       10:   22:        break;
+       15:   23:      case 'X':
+       15:   24:        if (prev_symbol == 'I'){
+        3:   25:          decimalValue += 8; //Subtrai 2 por conta do +1 do I
+       12:   26:        }else if (prev_symbol == 'V')
+        -:   27:        {
+        1:   28:          return -1;
+        -:   29:        }else{
+       11:   30:          decimalValue += 10;
+        -:   31:        }
+       14:   32:        break;  
+        9:   33:      case 'L':
+        9:   34:        if (prev_symbol == 'X'){
+        2:   35:          decimalValue += 30; //Subtrai 20 pois tem o 10 do X
+        -:   36:        }else{
+        7:   37:          decimalValue += 50;
+        -:   38:        }
+        9:   39:        if(prev_symbol == 'I' || prev_symbol == 'V'){
+        2:   40:          return -1;
+        -:   41:        }
+        7:   42:        break;
+        9:   43:      case 'C':
+        9:   44:        if(prev_symbol == 'L' || prev_symbol == 'I' || prev_symbol == 'V'){ // se precedido por L, V ou I da erro
+        3:   45:          return -1;
+        6:   46:        }else if (prev_symbol == 'X'){  //Subtrai 10
+        3:   47:          decimalValue += 80; // Soma 80 pois tem o +10 do X
+        -:   48:        }else{
+        3:   49:          decimalValue += 100;
+        -:   50:        }  
+        6:   51:        break;
+        9:   52:      case 'D':
+        9:   53:        if (prev_symbol == 'I' || prev_symbol == 'V' || prev_symbol == 'X' || prev_symbol == 'L'){
+        5:   54:          return -1;
+        4:   55:        }else if (prev_symbol == 'C'){ // Subtrai 200
+        1:   56:          decimalValue += 300;
+        -:   57:        }else{
+        3:   58:          decimalValue += 500;
+        -:   59:        }
+        4:   60:        break;
+       10:   61:      case 'M':
+       10:   62:        if (prev_symbol == 'I' || prev_symbol == 'V' || prev_symbol == 'X' || prev_symbol == 'L' || prev_symbol == 'D'){
+        5:   63:          return -1; // Se precedido por I,V,X,L Ou D, dá erro
+        5:   64:        }else if (prev_symbol == 'C'){ //Subtrai 100
+        1:   65:          decimalValue += 800;  
+        -:   66:        }else{
+        4:   67:          decimalValue += 1000;
+        -:   68:        }
+        5:   69:        break;
+       20:   70:      default:
+        -:   71:            // Se o algarismo romano não for válido, retorna -1
+       20:   72:          return -1;
+        -:   73:    }
+        -:   74:    //verifica se há mais de tres simbolos repetidos consecutivamente
+       63:   75:    if (num_romano[i] == prev_symbol) {
+       46:   76:      contador++;
+       46:   77:      if (contador == 3 && prev_symbol == 'L')
+        -:   78:      {
+    #####:   79:        return -1;
+        -:   80:      }
+       46:   81:      if (contador == 3 && prev_symbol == 'V')
+        -:   82:      {
+        1:   83:        return -1;
+        -:   84:      }
+       45:   85:      if (contador > 3) return -1; // Mais de três símbolos retorna -1
+        -:   86:      }else {
+       17:   87:        prev_symbol = num_romano[i];
+       17:   88:        contador = 1;
+        -:   89:      }
+        -:   90:    }
+       18:   91:  return decimalValue;
+        -:   92:}
+        -:   93: 
