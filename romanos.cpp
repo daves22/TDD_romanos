@@ -3,8 +3,6 @@
 int romanos_para_decimal(char const * num_romano)
 {
   int decimalValue = 0;
-  
-
 
   // Verifica cada algarismo romano de maneira singular
   char prev_symbol = num_romano[0];
@@ -25,6 +23,9 @@ int romanos_para_decimal(char const * num_romano)
       case 'X':
         if (prev_symbol == 'I'){
           decimalValue += 8; //Subtrai 2 por conta do +1 do I
+        }else if (prev_symbol == 'V')
+        {
+          return -1;
         }else{
           decimalValue += 10;
         }
@@ -33,15 +34,15 @@ int romanos_para_decimal(char const * num_romano)
         if (prev_symbol == 'X'){
           decimalValue += 30; //Subtrai 20 pois tem o 10 do X
         }else{
-          decimalValue +=50;
+          decimalValue += 50;
         }
         if(prev_symbol == 'I' || prev_symbol == 'V'){
-          decimalValue = -1;
+          return -1;
         }
         break;
       case 'C':
         if(prev_symbol == 'L' || prev_symbol == 'I' || prev_symbol == 'V'){ // se precedido por L, V ou I da erro
-          decimalValue = -1;
+          return -1;
         }else if (prev_symbol == 'X'){  //Subtrai 10
           decimalValue += 80; // Soma 80 pois tem o +10 do X
         }else{
@@ -49,8 +50,8 @@ int romanos_para_decimal(char const * num_romano)
         }  
         break;
       case 'D':
-        if (prev_symbol == 'I' || prev_symbol == 'V' || prev_symbol == 'X'){
-          decimalValue = -1;
+        if (prev_symbol == 'I' || prev_symbol == 'V' || prev_symbol == 'X' || prev_symbol == 'L'){
+          return -1;
         }else if (prev_symbol == 'C'){ // Subtrai 200
           decimalValue += 300;
         }else{
@@ -59,7 +60,7 @@ int romanos_para_decimal(char const * num_romano)
         break;
       case 'M':
         if (prev_symbol == 'I' || prev_symbol == 'V' || prev_symbol == 'X' || prev_symbol == 'L' || prev_symbol == 'D'){
-          decimalValue = -1;
+          return -1; // Se precedido por I,V,X,L Ou D, dá erro
         }else if (prev_symbol == 'C'){ //Subtrai 100
           decimalValue += 800;  
         }else{
@@ -68,14 +69,19 @@ int romanos_para_decimal(char const * num_romano)
         break;
       default:
             // Se o algarismo romano não for válido, retorna -1
-          decimalValue = -1;
+          return -1;
     }
     //verifica se há mais de tres simbolos repetidos consecutivamente
     if (num_romano[i] == prev_symbol) {
-      if (prev_symbol == 'V' || prev_symbol == 'L') {
-        return -1; // V e L não podem ser repetidos consecutivamente
-      }
       contador++;
+      if (contador == 3 && prev_symbol == 'L')
+      {
+        return -1;
+      }
+      if (contador == 3 && prev_symbol == 'V')
+      {
+        return -1;
+      }
       if (contador > 3) return -1; // Mais de três símbolos retorna -1
       }else {
         prev_symbol = num_romano[i];
